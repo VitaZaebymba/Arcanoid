@@ -44,3 +44,22 @@ def detect_collision(dx, dy, ball, rect):
     elif delta_y > delta_x:
         dx = -dx
     return dx, dy
+
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            exit()
+    sc.blit(img, (0, 0))
+
+    # drawing world
+    [pygame.draw.rect(sc, color_list[color], block) for color, block in enumerate(block_list)]
+    pygame.draw.rect(sc, pygame.Color('darkorange'), paddle)
+    pygame.draw.circle(sc, pygame.Color('white'), ball.center, ball_radius)
+
+    # ball movement
+    ball.x += ball_speed * dx
+    ball.y += ball_speed * dy
+
+    # collision left right
+    if ball.centerx < ball_radius or ball.centerx > WIDTH - ball_radius:
+        dx = -dx
